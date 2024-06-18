@@ -1,4 +1,19 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using  ListKow;
+
+var pinguino = new Pinguino(5);
+var aguila = new Aguila(10,100);
+var paloma =new Paloma(1,30);
+
+Printer.PrintAve(pinguino, Console.WriteLine);
+Printer.PrintAve(aguila, Console.WriteLine);
+Printer.PrintAve(paloma, Console.WriteLine);
+
+Printer.PrintAveVoladora(aguila, Console.WriteLine);
+Printer.PrintAveVoladora(paloma, Console.WriteLine);
+//Printer.PrintAveVoladora(pinguino, Console.WriteLine); //error de compilacion
+
+    
 var items = new List<int>(){
     1,2,3
 };
