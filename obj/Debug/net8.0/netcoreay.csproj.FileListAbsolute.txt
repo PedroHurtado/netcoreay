@@ -1,0 +1,15 @@
+/workspaces/netcoreay/bin/Debug/net8.0/netcoreay
+/workspaces/netcoreay/bin/Debug/net8.0/netcoreay.deps.json
+/workspaces/netcoreay/bin/Debug/net8.0/netcoreay.runtimeconfig.json
+/workspaces/netcoreay/bin/Debug/net8.0/netcoreay.dll
+/workspaces/netcoreay/bin/Debug/net8.0/netcoreay.pdb
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.AssemblyInfoInputs.cache
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.AssemblyInfo.cs
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.csproj.CoreCompileInputs.cache
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.sourcelink.json
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.dll
+/workspaces/netcoreay/obj/Debug/net8.0/refint/netcoreay.dll
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.pdb
+/workspaces/netcoreay/obj/Debug/net8.0/netcoreay.genruntimeconfig.cache
+/workspaces/netcoreay/obj/Debug/net8.0/ref/netcoreay.dll
