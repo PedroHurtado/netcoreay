@@ -1,0 +1,203 @@
+pizza:{
+    id,
+    name,
+    description,
+    url,
+    price(se calcula con el coste de los ingredientes + 20 % beneficio)
+    ingredients:[
+        {id,name,price}
+    ]
+}
+
+pizza->(n:m)->ingredientes
+
+server : http://localhost:8080
+
+1. url
+
+    1. Las path de las urls deben de estar pluralizados
+        /pizzas
+    2. Las url no deben de expresar acciones
+        /pizzas/add(NO)
+        metodos http(GET,POST,PUT,PATCH,DELETE)
+    3. Las url no deben de solicitar formatos
+        /pizzas.json
+        /pizzas.xml
+
+
+        headers:{
+            'accept':'application/json'  (GET,POST,PUT,DELETE,PATCH)
+        }
+        envio de datos
+        response/request(POST,PUT,PATCH,DELETE)
+        {
+            'content-type':'application/json'
+        }
+
+
+        https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+
+2. versionado
+
+    /pizzas (consumir la api antigua)
+    /v1/pizzas (consumen la api moderna)
+    accept:'application/vnd.dominio.com+v1'
+    x-verson:1.0 custom headers deben de tener una x-()->custom headers
+
+3. status code
+    OK
+        200->ok
+        201->created
+        204->No content
+    ERROR
+        403->Forbiden
+        401->No auteticated
+        404->NotFound    
+        400->bad request
+        409->conflict
+        405-Methos not allowed
+        500->error de servidor
+
+-status code 403->404
+-status code 401->redirect /login
+-status code 404-> /pizzas/1(si no existe el usuario)
+-status 400,409
+    {
+        attributo:'name', messages:["el atributo es requerido"]
+    }
+-status 500
+    1. Timeout retry 3 delay 3000
+    2. Estamos en obras
+
+4. actions
+
+    4.1 create
+        verbo:POST
+        path: /pizzas
+
+        request:{
+            headers:{
+                'content-type':'application/json'
+            }
+            body:{
+                ...
+            }
+        }
+
+        response
+            status code:201
+            statos code-error: 
+                400,401,405,(403 o 404),500, (400 o 409)
+    4.2 modificacion
+        verbos:PUT/PATCH(No idempotente)
+        path: /pizzas/{id}
+        request:{
+            headers:{
+                'content-type':'application/json'
+            }   
+            body{
+                {...}
+            }
+        }
+        response
+            status code:204
+            body:empty
+
+            status code: 200
+            headres:{
+                content-type:'application/json'
+            }
+            body:{
+                {...}
+            }
+
+            statos code-error: 
+                400,401,405,(403 o 404),500, (400 o 409), 404
+    4.3 remove
+        verbo:DELETE
+        path: /pizzas/{id}
+
+        request->empty
+        response->empty
+        status code : 204        
+
+        statos code-error: 
+                400,401,405,(403 o 404),500, (400 o 409), 404
+    4.4 Leer(1 registro)
+        verbo:'GET'
+        path:/pizzas/{id}
+        request
+            headers:{
+              accept:'application/json'      
+            }
+            body->EL VERBO GET NO SOPORTA BODY EN EL REQUEST
+        response:
+            headers:{
+                content-type:'application/json'
+            }
+            body:{...}
+            status code : 200
+            status code-error
+                400,401,405,(403 o 404),500, (400 o 409), 404 
+    4.5  Leer un collection de records               
+
+        verbo:'GET'
+        path:/pizzas
+        query:/pizzas?name=carb&page=1&size=25(QueryString)
+        request
+            headers:{
+              accept:'application/json'      
+            }
+            body->EL VERBO GET NO SOPORTA BODY EN EL REQUEST
+        response:
+            headers:{
+                content-type:'application/json'
+            }
+            body:[{}...{}]
+            status code : 200
+            status code-error
+                400,401,405,(403 o 404),500, (400 o 409)
+5. projection
+    select * from tabla
+    select id,name from table(projection)
+    queryStrig->where
+
+    &fields=id,name
+
+    https://www.odata.org/
+6.Nested Routes
+
+    add->ingredients
+    remove->ingredientes
+
+    /pizzas/{id}/ingredients POST(add)
+    /pizzas/{id}(ingrediens) DELETE(remove)
+
+
+Arquitectura
+    400->validar cada entrada(INSEGURA)
+    ->LIBRERIA DE VALIDACION(Fluent Validation)
+
+    /pizza->put,post
+
+    if (!isValid(Request)){
+	    throw new BadRequest()
+    }
+
+    404-> get,put,patch,delete
+        var pizzas = db.select(p=>p.id==id).firstOrThrow()
+        if(pizzas!=mull){
+            throw new NotFound()
+        }
+
+        firstOrThrow()
+            1. compueba que es nulo y lanza una exception
+            2. En caso contrario devuelve la entidad
+
+        return db.select(p=>p.id==id).firstOrThrow()
+
+1. Busqueda
+    Global handler exceptions->custom exceptions
+    400->un solo sitio para validar y sin miedo throw
+    404->un solo sitio para compobar el nulo y sin miedo throw
+        
