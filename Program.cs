@@ -1,5 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using  ListKow;
+using Domain;
+
+var ingredient = Ingredient.Create("Tomate",10M);
+
+var pizza = Pizza.Create("Carbonara","Carbona especial", "http");
+pizza.AddIngredient(ingredient);
+
 
 var pinguino = new Pinguino(5);
 var aguila = new Aguila(10,100);
