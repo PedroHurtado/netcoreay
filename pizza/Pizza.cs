@@ -1,3 +1,5 @@
+using System.Timers;
+
 namespace Domain
 {
     public abstract class BaseEntity
@@ -36,18 +38,24 @@ namespace Domain
             Name= name;
             Description = description;
             Url = url;
+            //evento
         }
         public void AddIngredient(Ingredient ingredient){
             ingredients.Add(ingredient);
+            //evento->agregado piña
         }
         public void RemoveIngredient(Ingredient ingredient){
             if(!ingredients.Contains(ingredient)){
-                //TODO Lanzar una exceptions
+                throw new Exception("el ingrediente que intenas eliminar no existe");
             }
             ingredients.Remove(ingredient);
+            //evento->tomate
         }
         public static Pizza Create(string name, string description, string url){
-            return new Pizza(Guid.NewGuid(),name,description,url );
+            var pizza =  new Pizza(Guid.NewGuid(),name,description,url );
+            //evento->creado una pizza el catalog
+            return pizza;
+            
         } 
         public List<Ingredient> Ingredients {
             get{

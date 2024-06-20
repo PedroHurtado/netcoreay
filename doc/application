@@ -1,0 +1,29 @@
+1. dominio
+2. infraestructura(persistencia)
+3. applicacion(uses cases)
+4. controlador(api)
+
+user->4->3->crea(1)->2
+
+/pizaa 
+POST
+{
+  ...
+}
+
+1. application
+    add,
+    update
+    etc...
+2. persistencia(dependencia de la capa de infraestructura)
+    -capa de persistencia
+        -fichero
+        -bb.dd
+        -servicio...etc
+
+    -repository pattern
+        add,
+        get,
+        update,
+        remove
+        ...
