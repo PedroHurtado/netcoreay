@@ -1,12 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using  ListKow;
-using Domain;
+//using Domain;
+using Controller;
+using Application;
+using Repository;
+var pizzaRepository = new PizzaRepositoy();  //infraestructura
 
-var ingredient = Ingredient.Create("Tomate",10M);
+var addPizza =new AddPizza(pizzaRepository); //application
+var controler = new PizzaPost(addPizza); //controlador
+var pizza = controler.Request(new CommandCreatePizza(
+    "carbonara",
+    "pizza buenisima",
+    "url imagen",
+    []
+));
 
-var pizza = Pizza.Create("Carbonara","Carbona especial", "http");
-pizza.AddIngredient(ingredient);
-
+Console.WriteLine(pizza);
 
 var pinguino = new Pinguino(5);
 var aguila = new Aguila(10,100);

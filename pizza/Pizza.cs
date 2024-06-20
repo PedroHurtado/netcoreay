@@ -1,4 +1,5 @@
 using System.Timers;
+using Microsoft.VisualBasic;
 
 namespace Domain
 {
@@ -28,16 +29,18 @@ namespace Domain
         public string Description { get; private set; }
         public string Url { get; private set; }
         private HashSet<Ingredient> ingredients = new HashSet<Ingredient>();
-        protected Pizza(Guid id,string name, string description, string url):base(id)
+        protected Pizza(Guid id,string name, string description, string url, List<Ingredient> ingredients):base(id)
         {
             Name = name;
             Description = description;
             Url = url;
+            ingredients.ForEach(i=>this.ingredients.Add(i));
         }      
         public void Update(string name, string description, string url){
             Name= name;
             Description = description;
             Url = url;
+            
             //evento
         }
         public void AddIngredient(Ingredient ingredient){
@@ -51,8 +54,9 @@ namespace Domain
             ingredients.Remove(ingredient);
             //evento->tomate
         }
-        public static Pizza Create(string name, string description, string url){
-            var pizza =  new Pizza(Guid.NewGuid(),name,description,url );
+        public static Pizza Create(string name, string description, string url, List<Ingredient> ingredients){
+            var pizza =  new Pizza(Guid.NewGuid(),name,description,url, ingredients );
+            
             //evento->creado una pizza el catalog
             return pizza;
             
